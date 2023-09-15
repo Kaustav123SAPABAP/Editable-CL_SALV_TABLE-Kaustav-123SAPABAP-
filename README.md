@@ -72,11 +72,11 @@ class lcl_salv_model definition inheriting from cl_salv_model_list.
     data: lo_control type ref to cl_salv_controller_model,
           lo_adapter type ref to cl_salv_adapter.
     methods:
-      grabe_model
+      get_model
         importing
           io_model type ref to cl_salv_table,
-      grabe_controller,
-      grabe_adapter.
+      get_controller,
+      get_adapter.
   private section.
     data: lo_model type ref to cl_salv_model.
 endclass.
@@ -102,19 +102,19 @@ start-of-selection.
 * LCL_SALV_MODEL implementation
 *----------------------------------------------------------------------*
 class lcl_salv_model implementation.
-  method grabe_model.
+  method get_model.
 *   save the model
 *   Get Model Object - narrow cast from cl_salv_table to cl_salv_model
     lo_model ?= io_model.
-  endmethod.                    "grabe_model
-  method grabe_controller.
+  endmethod.                    "get_model
+  method get_controller.
 *   save the controller
     lo_control = lo_model->r_controller.
-  endmethod.                    "grabe_controller
-  method grabe_adapter.
+  endmethod.                    "get_controller
+  method get_adapter.
 *   save the adapter from controller
     lo_adapter ?= lo_model->r_controller->r_adapter.
-  endmethod.                    "grabe_adapter
+  endmethod.                    "get_adapter
 endclass.
 
 *local class definition for Handler
@@ -168,9 +168,9 @@ class lcl_handler implementation.
       when 'EDIT'.
 
 * contorller
-        call method report->lo_salv_model->grabe_controller.
+        call method report->lo_salv_model->get_controller.
 * Adapter
-        call method report->lo_salv_model->grabe_adapter.
+        call method report->lo_salv_model->get_adapter.
 * Fullscreen Adapter (Down Casting)
         lo_full_adap ?= report->lo_salv_model->lo_adapter.
 * Get the Grid
@@ -244,7 +244,6 @@ class lcl_handler implementation.
 
     read table <ft_mod_rows> assigning <fs_mod_rows> index 1.
     assign component 'RODTEP_SCRIP_DATE' of structure <fs_mod_rows> to <fs>.
-    assign component 'RODTEP_SCRIP_DATE' of structure <fs_mod_rows> to <date>.
     lt_mod_cells = er_data_changed->mt_mod_cells.
 
     read table <ft_mod_rows> assigning <fs_mod_rows> index 1.
@@ -450,8 +449,8 @@ class lcl_ship implementation.
 
 *   object for the local inherited class from the CL_SALV_MODEL_LIST
     create object lo_salv_model.
-*   grabe model to use it later
-    call method lo_salv_model->grabe_model
+*   get model to use it later
+    call method lo_salv_model->get_model
       exporting
         io_model = lo_table.
 
