@@ -359,7 +359,7 @@ class lcl_ship implementation.
     lo_selections->set_selection_mode( if_salv_c_selection_mode=>row_column ).
     lo_table->get_layout( )->set_save_restriction( if_salv_c_layout=>restrict_none ).
     lo_functions = lo_table->get_functions( ).
-    lo_functions->set_default( abap_true ). "Alternatif
+    lo_functions->set_default( abap_true ). 
     lo_functions->set_all( abap_true ).
     "*-----------------Columns - Fieldcatalog-------------------------*
     lo_columns = lo_table->get_columns( ).
@@ -420,7 +420,7 @@ class lcl_ship implementation.
     lo_logo->set_left_content( lo_header ).
 
 * set Right Image
-    lo_logo->set_right_logo( `BALC` ).                      "#EC NOTEXT
+    lo_logo->set_right_logo( `LOGO` ).                      "#EC NOTEXT
 
 *set the top of list using the header for Online.
     lo_table->set_top_of_list( lo_logo ).
